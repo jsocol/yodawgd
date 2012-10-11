@@ -1,6 +1,6 @@
-========
-FillItIn
-========
+=======
+yodawgd
+=======
 
 A super-simple autocompletion service wrapped around yodawg_.
 
@@ -8,10 +8,10 @@ A super-simple autocompletion service wrapped around yodawg_.
 Building
 ========
 
-To build FillItIn::
+To build yodawgd::
 
-    git clone --recursive https://github.com/jsocol/fillitin.git
-    cd fillitin
+    git clone --recursive https://github.com/jsocol/yodawgd.git
+    cd yodawgd
     make
 
 
@@ -20,11 +20,11 @@ Usage
 
 Right now it's very simple::
 
-    ./fillitin <port>
+    ./yodawgd <port>
 
 I've been prefering port ``3434`` for no particular reason::
 
-    ./fillitin 3434
+    ./yodawgd 3434
 
 
 Protocol
@@ -46,7 +46,6 @@ ToDo
 * Work out the details of the line protocol and responses.
 * Make it actually, you know, work.
 * Make the whole daemon thing more robust.
-* Figure out a better name.
 
 
 A little ways down the road
