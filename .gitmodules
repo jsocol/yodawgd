@@ -1,0 +1,3 @@
+[submodule "deps/yodawg"]
+	path = deps/yodawg
+	url = https://github.com/jsocol/yodawg.git
