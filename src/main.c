@@ -24,7 +24,7 @@
 #define LISTENQ 1024
 
 
-void usage();
+void usage(char *);
 void read_command(const char *, char *, char *);
 
 
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
     serveraddr.sin_addr.s_addr = htonl(INADDR_ANY);
     serveraddr.sin_port = htons(port);
 
-    if(bind(list_s, &serveraddr, sizeof(serveraddr)) < 0)
+    if(bind(list_s, (struct sockaddr *) &serveraddr, sizeof(serveraddr)) < 0)
         DIE("Could not bind to address.")
 
     if(listen(list_s, LISTENQ) < 0)
@@ -98,12 +98,14 @@ int main(int argc, char *argv[])
         if(strcmp(cmd, "ADD") == 0) {
             yodawg_add_string(dawg, value);
             printf("Added %s.\n", value);
-            // TODO: ack.
+            write(conn_s, "ACK\n", 4);
         }
         else if(strcmp(cmd, "COMPLETE") == 0) {
             wordlist = yodawg_find_strings(dawg, value);
             printf("Finding matches for %s.\n", value);
             for(i = 0; i < wordlist->cursize; i++) {
+                sprintf(outbuffer, "%s\n", wordlist->words[i]);
+                write(conn_s, outbuffer, strlen(outbuffer));
                 printf("\t%s\n", wordlist->words[i]);
             }
             // TODO: answer.
@@ -131,8 +133,8 @@ void read_command(const char *instr, char *outcmd, char *outval)
     while((c = *instr++) > 32)
         *outcmd++ = c;
     *outcmd = '\0';
-    while((c = *instr++) <= 32) ;
-    while((c = *instr++) != 0)
+    while((c = *instr++) != 34) ;
+    while((c = *instr++) != 34)
         *outval++ = c;
     *outval = '\0';
 }
